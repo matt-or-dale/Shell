@@ -28,12 +28,12 @@
 char* get_current_directory(bool* should_free) {
   // TODO: Get the current working directory. This will fix the prompt path.
   // HINT: This should be pretty simple
-  IMPLEMENT_ME();
+  char *str = get_current_dir_name(3);
 
   // Change this to true if necessary
   *should_free = false;
 
-  return "get_current_directory()";
+  return(str);
 }
 
 // Returns the value of an environment variable env_var
@@ -42,12 +42,12 @@ const char* lookup_env(const char* env_var) {
   // to interpret variables from the command line and display the prompt
   // correctly
   // HINT: This should be pretty simple
-  IMPLEMENT_ME();
+  char *str = getenv(3);
 
   // TODO: Remove warning silencers
   (void) env_var; // Silence unused variable warning
 
-  return "???";
+  return(str);
 }
 
 // Check the status of background jobs
@@ -305,9 +305,9 @@ void create_process(CommandHolder holder) {
   // TODO: Setup pipes, redirects, and new process
   IMPLEMENT_ME();
 
-  //parent_run_command(holder.cmd); // This should be done in the parent branch of
+  parent_run_command(holder.cmd); // This should be done in the parent branch of
                                   // a fork
-  //child_run_command(holder.cmd); // This should be done in the child branch of a fork
+  child_run_command(holder.cmd); // This should be done in the child branch of a fork
 }
 
 // Run a list of commands
