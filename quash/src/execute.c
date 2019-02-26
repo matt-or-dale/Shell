@@ -33,7 +33,7 @@ char* get_current_directory(bool* should_free) {
   // Change this to true if necessary
   *should_free = false;
 
-  return(str);
+  return(*str);
 }
 
 // Returns the value of an environment variable env_var
@@ -42,12 +42,12 @@ const char* lookup_env(const char* env_var) {
   // to interpret variables from the command line and display the prompt
   // correctly
   // HINT: This should be pretty simple
-  char *str = getenv(3);
+  char *str = getenv(env_var);
 
   // TODO: Remove warning silencers
   (void) env_var; // Silence unused variable warning
 
-  return(str);
+  return(*str);
 }
 
 // Check the status of background jobs
@@ -305,9 +305,9 @@ void create_process(CommandHolder holder) {
   // TODO: Setup pipes, redirects, and new process
   IMPLEMENT_ME();
 
-  parent_run_command(holder.cmd); // This should be done in the parent branch of
+  //parent_run_command(holder.cmd); // This should be done in the parent branch of
                                   // a fork
-  child_run_command(holder.cmd); // This should be done in the child branch of a fork
+  //child_run_command(holder.cmd); // This should be done in the child branch of a fork
 }
 
 // Run a list of commands
