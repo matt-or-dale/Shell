@@ -9,6 +9,8 @@
 
 #include "execute.h"
 
+#include "deque.h"
+
 #include <stdio.h>
 
 #include "quash.h"
@@ -140,11 +142,9 @@ void run_echo(EchoCommand cmd) {
   // string is always NULL) list of strings.
   char** str = cmd.args;
 
-  // TODO: Remove warning silencers
-  (void) str; // Silence unused variable warning
-
   // TODO: Implement echo
-  IMPLEMENT_ME();
+  if(str != NULL)
+  fprintf(stdout, "%s\n", str);
 
   // Flush the buffer before returning
   fflush(stdout);
