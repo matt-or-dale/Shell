@@ -20,6 +20,34 @@
 #define IMPLEMENT_ME()                                                  \
   fprintf(stderr, "IMPLEMENT ME: %s(line %d): %s()\n", __FILE__, __LINE__, __FUNCTION__)
 
+IMPLEMENT_DEQUE_STRUCT(PIDDeque, pid_t);
+IMPLEMENT_DEQUE(PIDDeque, pid_t);
+
+typedef struct Job{
+  int job_id;
+  char* cmd;
+  PIDDeque pid_list;
+} Job;
+
+IMPLEMENT_DEQUE_STRUCT(JobDeque, Job);
+IMPLEMENT_DEQUE(JobDeque, Job);
+
+JobDeque jobs;
+
+static Job _new_job() {
+  return(Job){
+    0,
+    get_command_string(),
+    new_PIDDeque(1),
+  };
+}
+
+static void _destroy_job(Job job){
+  if (job.cmd != NULL){
+    free(job.cmd);
+  }
+  destroy_PIDDeque(&job.pid_list);
+}
 /***************************************************************************
  * Interface Functions
  ***************************************************************************/
@@ -28,12 +56,16 @@
 char* get_current_directory(bool* should_free) {
   // TODO: Get the current working directory. This will fix the prompt path.
   // HINT: This should be pretty simple
-  char *str = get_current_dir_name(3);
+  char *str = NULL;
+  str = getcwd(NULL, 0);
+  if(str == NULL){
+    perror("something went wrong\n");
+  }
 
   // Change this to true if necessary
-  *should_free = false;
+  *should_free = true;
 
-  return(*str);
+  return(str);
 }
 
 // Returns the value of an environment variable env_var
@@ -42,12 +74,12 @@ const char* lookup_env(const char* env_var) {
   // to interpret variables from the command line and display the prompt
   // correctly
   // HINT: This should be pretty simple
-  char *str = getenv(env_var);
+  //char *str = getenv(env_var);
 
   // TODO: Remove warning silencers
   //(void) env_var; // Silence unused variable warning
 
-  return(*str);
+  return(getenv(env_var));
 }
 
 // Check the status of background jobs
@@ -169,11 +201,15 @@ void run_kill(KillCommand cmd) {
 // Prints the current working directory to stdout
 void run_pwd() {
   // TODO: Print the current working directory
-  char *str = get_current_directory(false);
-  printf(*str);
+  bool should_free = false;
+  char *str = get_current_directory(&should_free);
+  fprintf(stdout, "%s\n", str);
 
   // Flush the buffer before returning
   fflush(stdout);
+  if(should_free == true){
+    free(str);
+  }
 }
 
 // Prints all background jobs currently in the job list to stdout
@@ -313,8 +349,14 @@ void create_process(CommandHolder holder) {
 
 // Run a list of commands
 void run_script(CommandHolder* holders) {
+//  static bool first = true;
   if (holders == NULL)
     return;
+
+    // if (first){
+    //   jobs = new_destructable_JobDeque(1, _destroy_job);
+    //   first = false;
+    // }
 
   check_jobs_bg_status();
 
