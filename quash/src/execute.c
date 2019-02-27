@@ -10,6 +10,7 @@
 #include "execute.h"
 
 #include "deque.h"
+//#include "pid_queue.h"
 
 #include <stdio.h>
 
@@ -22,34 +23,34 @@
 #define IMPLEMENT_ME()                                                  \
   fprintf(stderr, "IMPLEMENT ME: %s(line %d): %s()\n", __FILE__, __LINE__, __FUNCTION__)
 
-IMPLEMENT_DEQUE_STRUCT(PIDDeque, pid_t);
-IMPLEMENT_DEQUE(PIDDeque, pid_t);
-
-typedef struct Job{
-  int job_id;
-  char* cmd;
-  PIDDeque pid_list;
-} Job;
-
-IMPLEMENT_DEQUE_STRUCT(JobDeque, Job);
-IMPLEMENT_DEQUE(JobDeque, Job);
-
-JobDeque jobs;
-
-static Job _new_job() {
-  return(Job){
-    0,
-    get_command_string(),
-    new_PIDDeque(1),
-  };
-}
-
-static void _destroy_job(Job job){
-  if (job.cmd != NULL){
-    free(job.cmd);
-  }
-  destroy_PIDDeque(&job.pid_list);
-}
+// IMPLEMENT_DEQUE_STRUCT(PIDDeque, pid_t);
+// IMPLEMENT_DEQUE(PIDDeque, pid_t);
+//
+// typedef struct Job{
+//   int job_id;
+//   char* cmd;
+//   PIDDeque pid_list;
+// } Job;
+//
+// IMPLEMENT_DEQUE_STRUCT(JobDeque, Job);
+// IMPLEMENT_DEQUE(JobDeque, Job);
+//
+// JobDeque jobs;
+//
+// static Job _new_job() {
+//   return(Job){
+//     0,
+//     get_command_string(),
+//     new_PIDDeque(1),
+//   };
+// }
+//
+// static void _destroy_job(Job job){
+//   if (job.cmd != NULL){
+//     free(job.cmd);
+//   }
+//   destroy_PIDDeque(&job.pid_list);
+// }
 /***************************************************************************
  * Interface Functions
  ***************************************************************************/
