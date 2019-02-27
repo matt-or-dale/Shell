@@ -45,7 +45,7 @@ const char* lookup_env(const char* env_var) {
   char *str = getenv(env_var);
 
   // TODO: Remove warning silencers
-  (void) env_var; // Silence unused variable warning
+  //(void) env_var; // Silence unused variable warning
 
   return(*str);
 }
@@ -169,7 +169,8 @@ void run_kill(KillCommand cmd) {
 // Prints the current working directory to stdout
 void run_pwd() {
   // TODO: Print the current working directory
-  IMPLEMENT_ME();
+  char *str = get_current_directory(false);
+  printf(*str);
 
   // Flush the buffer before returning
   fflush(stdout);
