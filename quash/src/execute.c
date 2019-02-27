@@ -127,14 +127,11 @@ void run_generic(GenericCommand cmd) {
   char* exec = cmd.args[0];
   char** args = cmd.args;
 
-  // TODO: Remove warning silencers
-  (void) exec; // Silence unused variable warning
-  (void) args; // Silence unused variable warning
-
   // TODO: Implement run generic
-  IMPLEMENT_ME();
-
+  int i = execvp(exec, args);
+  if(i == -1){
   perror("ERROR: Failed to execute program");
+  }
 }
 
 // Print strings
@@ -144,9 +141,9 @@ void run_echo(EchoCommand cmd) {
   char** str = cmd.args;
 
   // TODO: Implement echo
-  if(str != NULL)
-  fprintf(stdout, "%s\n", str);
-
+  if(*str != NULL){
+    fprintf(stdout, "%s\n", *str);
+  }
   // Flush the buffer before returning
   fflush(stdout);
 }
@@ -163,7 +160,7 @@ void run_export(ExportCommand cmd) {
 
   // TODO: Implement export.
   // HINT: This should be quite simple.
-  IMPLEMENT_ME();
+  setenv(env_var, val, 1);
 }
 
 // Changes the current working directory
@@ -178,11 +175,18 @@ void run_cd(CDCommand cmd) {
   }
 
   // TODO: Change directory
+  char *str = NULL;
+  str = realpath(dir, 0);
+  chdir(str);
 
   // TODO: Update the PWD environment variable to be the new current working
   // directory and optionally update OLD_PWD environment variable to be the old
   // working directory.
-  IMPLEMENT_ME();
+
+  setenv("PWD", str, 1);
+  // if(i == -1){
+  //   perror("ERROR: Could not set ENV_VAR");
+  // }
 }
 
 // Sends a signal to all processes contained in a job
