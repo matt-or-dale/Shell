@@ -141,9 +141,8 @@ void run_echo(EchoCommand cmd) {
   char** str = cmd.args;
 
   // TODO: Implement echo
-  if(*str != NULL){
+  while (str!=NULL)
     fprintf(stdout, "%s\n", *str);
-  }
   // Flush the buffer before returning
   fflush(stdout);
 }
@@ -182,11 +181,7 @@ void run_cd(CDCommand cmd) {
   // TODO: Update the PWD environment variable to be the new current working
   // directory and optionally update OLD_PWD environment variable to be the old
   // working directory.
-
-  setenv("PWD", str, 1);
-  // if(i == -1){
-  //   perror("ERROR: Could not set ENV_VAR");
-  // }
+  setenv("PWD",dir,1);
 }
 
 // Sends a signal to all processes contained in a job
