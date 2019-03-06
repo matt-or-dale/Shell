@@ -141,7 +141,7 @@ void run_echo(EchoCommand cmd) {
   char** str = cmd.args;
 
   // TODO: Implement echo
-  //while (str!=NULL)
+  if(str!=NULL)
     fprintf(stdout, "%s\n", *str);
   // Flush the buffer before returning
   fflush(stdout);
