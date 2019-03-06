@@ -143,7 +143,6 @@ void run_echo(EchoCommand cmd) {
   // TODO: Implement echo
   if(str != NULL)
     fprintf(stdout, "%s\n", *str);
-    fprintf(stdout, "%i\n", sizeof(*str));
   // Flush the buffer before returning
   fflush(stdout);
 }
