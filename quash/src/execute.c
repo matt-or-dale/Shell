@@ -142,7 +142,7 @@ void run_echo(EchoCommand cmd) {
 
   // TODO: Implement echo
   for(int i = 0; i<sizeof(str); i = i+1)
-    fprintf(stdout, "%s\n", *str[i]);
+    fprintf(stdout, "%s\n", str[i]);
   // Flush the buffer before returning
   fflush(stdout);
 }
